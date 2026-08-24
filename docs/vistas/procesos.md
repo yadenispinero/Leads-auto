@@ -1,24 +1,24 @@
-# Vista de Procesos y Pasos - Leads Auto
+# Process and Steps View - Leads Auto
 
-Diagrama detallado de los procesos, actividades, decisiones y pasos del sistema.
+Detailed diagram of system processes, activities, decisions, and steps.
 
 ```mermaid
 flowchart TD
-    subgraph Entrada["📧 ENTRADA: GMAIL"]
+    subgraph Entrada["📧 INPUT: GMAIL"]
         direction LR
-        E1@{ shape: sm-circ, label: "📧 Nuevo email" }
+        E1@{ shape: sm-circ, label: "📧 New email" }
         E1 --> E2("Gmail API")
     end
 
-    subgraph S1["🔵 SISTEMA 1: CARGA DE CAPACIDADES"]
+    subgraph S1["🔵 SYSTEM 1: CAPABILITY LOADING"]
         direction TB
-        P1_0@{ shape: sm-circ, label: "🔄 Cambio en LinkedIn/Proyectos" }
-        P1_1("Claude Skill:<br/>Extraer datos")
-        P1_2("Procesar perfil LinkedIn")
-        P1_3("Extraer certificaciones")
-        P1_4("Extraer proyectos")
-        P1_5[("📊 Google Sheets<br/>Inventario_Capacidades")]
-        P1_6("⚡ Actualizar índice")
+        P1_0@{ shape: sm-circ, label: "🔄 Change in LinkedIn/Projects" }
+        P1_1("Claude Skill:<br/>Extract data")
+        P1_2("Process LinkedIn profile")
+        P1_3("Extract certifications")
+        P1_4("Extract projects")
+        P1_5[("📊 Google Sheets<br/>Inventory_Capabilities")]
+        P1_6("⚡ Update index")
 
         P1_0 --> P1_1
         P1_1 --> P1_2
@@ -30,39 +30,39 @@ flowchart TD
         P1_5 --> P1_6
     end
 
-    subgraph S2["🟢 SISTEMA 2: EVALUACIÓN Y CAPTURA DE OFERTAS"]
+    subgraph S2["🟢 SYSTEM 2: OFFER EVALUATION AND CAPTURE"]
         direction TB
-        P2_1("📧 Recibir email")
-        P2_2@{ shape: delay, label: "⏱ Google Apps Script<br/>cada 4 horas" }
-        P2_3("Extraer datos esenciales<br/>remitente, empresa, descripción")
-        P2_4@{ shape: diamond, label: "✓ ¿Ya procesado?" }
-        P2_5@{ shape: text, label: "❌ Duplicado descartado" }
-        P2_6("Normalizar datos")
-        P2_7("Enriquecer desde APIs<br/>Freelancer.com, etc")
-        P2_8[("💾 Google Sheets<br/>Evaluación")]
-        P2_9("📊 Fórmulas Sheets:<br/>- Recuperar skills de Inventario<br/>- Calcular match inicial<br/>- Calcular score")
-        P2_10[("📋 Google Sheets<br/>Backlog priorizado")]
+        P2_1("📧 Receive email")
+        P2_2@{ shape: delay, label: "⏱ Google Apps Script<br/>every 4 hours" }
+        P2_3("Extract essential data<br/>sender, company, description")
+        P2_4@{ shape: diamond, label: "✓ Already processed?" }
+        P2_5@{ shape: text, label: "❌ Duplicate discarded" }
+        P2_6("Normalize data")
+        P2_7("Enrich from APIs<br/>Freelancer.com, etc")
+        P2_8[("💾 Google Sheets<br/>Evaluation")]
+        P2_9("📊 Sheets Formulas:<br/>- Retrieve skills from Inventory<br/>- Calculate initial match<br/>- Calculate score")
+        P2_10[("📋 Google Sheets<br/>Prioritized backlog")]
 
         P2_1 --> P2_2
         P2_2 --> P2_3
         P2_3 --> P2_4
         P2_4 -->|No| P2_6
-        P2_4 -->|Sí| P2_5
+        P2_4 -->|Yes| P2_5
         P2_6 --> P2_7
         P2_7 --> P2_8
         P2_8 --> P2_9
         P2_9 --> P2_10
     end
 
-    subgraph S3["🟡 SISTEMA 3: ELABORACIÓN DE PROPUESTAS"]
+    subgraph S3["🟡 SYSTEM 3: PROPOSAL DEVELOPMENT"]
         direction TB
-        P3_1[("📋 Backlog priorizado")]
-        P3_2("👤 Seleccionar oportunidad")
-        P3_3("Claude API:<br/>Generar propuesta")
-        P3_4("Revisar y ajustar")
-        P3_5[("📄 Google Drive<br/>Propuesta final")]
-        P3_6("Enviar por Gmail")
-        P3_7@{ shape: framed-circle, label: "📨 Propuesta enviada" }
+        P3_1[("📋 Prioritized backlog")]
+        P3_2("👤 Select opportunity")
+        P3_3("Claude API:<br/>Generate proposal")
+        P3_4("Review and adjust")
+        P3_5[("📄 Google Drive<br/>Final proposal")]
+        P3_6("Send by Gmail")
+        P3_7@{ shape: framed-circle, label: "📨 Proposal sent" }
 
         P3_1 --> P3_2
         P3_2 --> P3_3
@@ -72,17 +72,17 @@ flowchart TD
         P3_6 --> P3_7
     end
 
-    subgraph Seguimiento["📊 SEGUIMIENTO Y RESULTADOS"]
+    subgraph Seguimiento["📊 TRACKING AND RESULTS"]
         direction TB
-        M1[("📊 Google Sheets<br/>Histórico")]
-        M2("Métricas de éxito")
+        M1[("📊 Google Sheets<br/>History")]
+        M2("Success metrics")
         M3[("📈 Dashboard<br/>Google Sheets")]
 
         M1 --> M2
         M2 --> M3
     end
 
-    %% Flujo principal
+    %% Main flow
     E2 --> P2_1
     P1_0 -.-> P1_1
     P1_5 -.-> P2_9
@@ -110,176 +110,177 @@ flowchart TD
     style P2_9 stroke-width:2px
 ```
 
-## Descripción Detallada de Procesos
+## Detailed Process Description
 
-### 📧 Entrada: Gmail
-**Trigger:** Nuevo email en buzón específico
-
----
-
-### 🔵 Sistema 1: Carga de Capacidades
-**Tipo:** Event-driven (solo cuando hay cambios)  
-**Frecuencia:** Manual/automático en cambios  
-**Responsabilidad:** Mantener inventario actualizado de skills y competencias
-
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| 1.0 | 🔄 Evento | Cambio detectado en LinkedIn/Proyectos/Certificaciones |
-| 1.1 | 🟣 Claude Skill | Leer datos de origen (LinkedIn, Drive con proyectos) |
-| 1.2 | 🟣 Claude Skill | Extraer y estructurar perfil LinkedIn |
-| 1.3 | 🟣 Claude Skill | Extraer certificaciones y validaciones |
-| 1.4 | 🟣 Claude Skill | Extraer proyectos y casos de éxito |
-| 1.5 | 💾 Google Sheets | Guardar activos, skills y competencias en **Inventario_Capacidades** |
-| 1.6 | ⚡ Automático | Actualizar índices y referencias cruzadas |
-
-**Output:** Google Sheets `Inventario_Capacidades` con schema:
-```
-Skill | Nivel | Proyectos | Certificaciones | LinkedIn URL | Última actualización
-```
+### 📧 Input: Gmail
+**Trigger:** New email in specific inbox
 
 ---
 
-### 🟢 Sistema 2: Evaluación y Captura de Ofertas
-**Tipo:** Automático  
-**Frecuencia:** Cada 4 horas (mediante Google Apps Script Cron)  
-**Responsabilidad:** Procesar, enriquecer y evaluar ofertas para priorización
+### 🔵 System 1: Capability Loading
+**Type:** Event-driven (only when changes occur)
+**Frequency:** Manual/automatic on changes
+**Responsibility:** Maintain updated inventory of skills and competencies
 
-#### 2.1 - Procesamiento en Google Apps Script (Drive)
-El Google Apps Script ejecuta **todo el procesamiento de forma integrada y completa** antes de guardar en Google Sheets. Se ejecuta automáticamente cada 4 horas. Ningún dato intermedio llega a la hoja.
+| Step | Tool | Description |
+|------|------|------------|
+| 1.0 | 🔄 Event | Change detected in LinkedIn/Projects/Certifications |
+| 1.1 | 🟣 Claude Skill | Read data from source (LinkedIn, Drive with projects) |
+| 1.2 | 🟣 Claude Skill | Extract and structure LinkedIn profile |
+| 1.3 | 🟣 Claude Skill | Extract certifications and validations |
+| 1.4 | 🟣 Claude Skill | Extract projects and success cases |
+| 1.5 | 💾 Google Sheets | Save assets, skills, and competencies in **Inventory_Capabilities** |
+| 1.6 | ⚡ Automatic | Update indexes and cross-references |
 
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| 2.1 | 📧 Gmail | Recibir nuevo email con oportunidad |
-| 2.2 | 📝 Google Apps Script | Ejecutar script de procesamiento completo (cron cada 4h) |
-| 2.3 | ⚡ Automático | Extraer: remitente, empresa, descripción, URL |
-| 2.4 | ✓ Validación | Consultar Google Sheets: ¿Hash ya procesado? |
-| 2.4a | ❌ Si duplicado | Marcar como duplicado, no procesar |
-| 2.4b | ✅ Si nuevo | Continuar al paso 2.5 |
-| 2.5 | ⚡ Automático | Normalizar datos extraídos |
-| 2.6 | 🌐 API externa | Enriquecer desde Freelancer.com API (solo no procesados antes) |
-| 2.6a | ⚡ Automático | Obtener datos adicionales: presupuesto, skills requeridas, complejidad, etc |
-
-**Datos enriquecidos obtenidos:**
+**Output:** Google Sheets `Inventory_Capabilities` with schema:
 ```
-Fecha | Remitente | Empresa | Descripción | URL | Hash | Estado
-+ Presupuesto | Skills requeridas | Complejidad | Plataforma
-```
-
-#### 2.2 - Evaluación y Priorización (Google Sheets)
-La evaluación y priorización se realiza **completamente en la hoja de cálculo "Evaluación"** utilizando fórmulas de Google Sheets que consultan automáticamente el `Inventario_Capacidades`.
-
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| 2.7 | 💾 Google Sheets | Guardar datos completamente procesados y enriquecidos en hoja "Evaluación" |
-| 2.8 | 📊 Fórmulas | Recuperar skills disponibles de `Inventario_Capacidades` (VLOOKUP/INDEX-MATCH) |
-| 2.9 | 📊 Fórmulas | Calcular match inicial entre oferta y skills disponibles |
-| 2.10 | 📊 Fórmulas | Calcular score (0-100) basado en match y factores de priorización |
-| 2.11 | 📋 Google Sheets | Guardar en "Backlog priorizado" (ordenado por score, actualizado automáticamente) |
-
-**Schema en Google Sheets "Evaluación":**
-```
-Oferta | Presupuesto | Skills requeridas | Skills disponibles | Match % | Score | Prioridad | Estado | Asignado
+Skill | Level | Projects | Certifications | LinkedIn URL | Last updated
 ```
 
 ---
 
-### 🟡 Sistema 3: Elaboración de Propuestas
-**Tipo:** Semi-automático (requiere revisión manual)  
-**Frecuencia:** Según disponibilidad  
-**Responsabilidad:** Generar propuestas personalizadas
+### 🟢 System 2: Offer Evaluation and Capture
+**Type:** Automatic
+**Frequency:** Every 4 hours (via Google Apps Script Cron)
+**Responsibility:** Process, enrich, and evaluate offers for prioritization
 
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| 3.1 | 📋 Google Sheets | Obtener siguiente oportunidad del backlog priorizado |
-| 3.2 | 👤 Manual | Revisar oportunidad y decidir si proceder |
-| 3.3 | 🟣 Claude API | Generar propuesta personalizada con contexto |
-| 3.4 | 👤 Manual | Revisar, ajustar, validar propuesta |
-| 3.5 | 📄 Google Drive | Guardar propuesta (PDF o Docs) |
-| 3.6 | 📧 Gmail | Enviar por email al cliente |
-| 3.7 | 📋 Google Sheets | Registrar envío (fecha, resultado) |
+#### 2.1 - Processing in Google Apps Script (Drive)
+Google Apps Script executes **all processing in an integrated and complete manner** before saving to Google Sheets. It runs automatically every 4 hours. No intermediate data reaches [...]
 
-**Entrada a Claude API:**
+| Step | Tool | Description |
+|------|------|------------|
+| 2.1 | 📧 Gmail | Receive new email with opportunity |
+| 2.2 | 📝 Google Apps Script | Execute complete processing script (cron every 4h) |
+| 2.3 | ⚡ Automatic | Extract: sender, company, description, URL |
+| 2.4 | ✓ Validation | Check Google Sheets: Hash already processed? |
+| 2.4a | ❌ If duplicate | Mark as duplicate, don't process |
+| 2.4b | ✅ If new | Continue to step 2.5 |
+| 2.5 | ⚡ Automatic | Normalize extracted data |
+| 2.6 | 🌐 External API | Enrich from Freelancer.com API (only not processed before) |
+| 2.6a | ⚡ Automatic | Get additional data: budget, required skills, complexity, etc |
+
+**Enriched data obtained:**
+```
+Date | Sender | Company | Description | URL | Hash | Status
++ Budget | Required Skills | Complexity | Platform
+```
+
+#### 2.2 - Evaluation and Prioritization (Google Sheets)
+Evaluation and prioritization is performed **completely in the "Evaluation" spreadsheet** using Google Sheets formulas that automatically query the `Inventory_Capabilities`.
+
+| Step | Tool | Description |
+|------|------|------------|
+| 2.7 | 💾 Google Sheets | Save completely processed and enriched data in "Evaluation" sheet |
+| 2.8 | 📊 Formulas | Retrieve available skills from `Inventory_Capabilities` (VLOOKUP/INDEX-MATCH) |
+| 2.9 | 📊 Formulas | Calculate initial match between offer and available skills |
+| 2.10 | 📊 Formulas | Calculate score (0-100) based on match and prioritization factors |
+| 2.11 | 📋 Google Sheets | Save to "Prioritized backlog" (sorted by score, updated automatically) |
+
+**Schema in Google Sheets "Evaluation":**
+```
+Offer | Budget | Required Skills | Available Skills | Match % | Score | Priority | Status | Assigned
+```
+
+---
+
+### 🟡 System 3: Proposal Development
+**Type:** Semi-automatic (requires manual review)
+**Frequency:** As available
+**Responsibility:** Generate personalized proposals
+
+| Step | Tool | Description |
+|------|------|------------|
+| 3.1 | 📋 Google Sheets | Get next opportunity from prioritized backlog |
+| 3.2 | 👤 Manual | Review opportunity and decide whether to proceed |
+| 3.3 | 🟣 Claude API | Generate personalized proposal with context |
+| 3.4 | 👤 Manual | Review, adjust, validate proposal |
+| 3.5 | 📄 Google Drive | Save proposal (PDF or Docs) |
+| 3.6 | 📧 Gmail | Send by email to client |
+| 3.7 | 📋 Google Sheets | Register sending (date, result) |
+
+**Input to Claude API:**
 ```json
 {
-  "oferta": { "empresa", "descripción", "presupuesto", "skills requeridas" },
-  "competencias": { "skills disponibles", "nivel", "proyectos similares", "certificaciones" },
-  "template": "propuesta_estándar_v1"
+  "offer": { "company", "description", "budget", "required skills" },
+  "competencies": { "available skills", "level", "similar projects", "certifications" },
+  "template": "standard_proposal_v1"
 }
 ```
 
 ---
 
-### 📊 Seguimiento y Resultados
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| M.1 | 📋 Google Sheets | Registrar resultado de propuesta (aceptada/rechazada) |
-| M.2 | ⚡ Fórmulas | Calcular: tasa de conversión, tiempo promedio, ingresos |
-| M.3 | 📈 Dashboard | Mostrar KPIs en Google Sheets |
+### 📊 Tracking and Results
+| Step | Tool | Description |
+|------|------|------------|
+| M.1 | 📋 Google Sheets | Record proposal result (accepted/rejected) |
+| M.2 | ⚡ Formulas | Calculate: conversion rate, average time, revenue |
+| M.3 | 📈 Dashboard | Display KPIs in Google Sheets |
 
 ---
 
-## Leyenda de Herramientas
+## Tool Legend
 
-| Símbolo | Herramienta | Uso |
-|---------|-----------|-----|
-| 📧 | Gmail API | Entrada de oportunidades |
-| 📝 | Google Apps Script | Procesamiento automático completo (extraer, validar, enriquecer) - Cron cada 4h |
-| 🟣 | Claude (Pro/API) | Procesamiento inteligente |
-| 💾 | Google Sheets | Almacenamiento principal y evaluación (solo datos finales + fórmulas) |
-| 📄 | Google Drive | Documentos y propuestas |
-| 🌐 | APIs externas | Enriquecimiento de datos |
-| ⚡ | Fórmulas Sheets | Cálculos, matching y automatización |
-| 👤 | Manual | Intervención humana |
+| Symbol | Tool | Use |
+|--------|------|-----|
+| 📧 | Gmail API | Opportunity input |
+| 📝 | Google Apps Script | Complete automatic processing (extract, validate, enrich) - Cron every 4h |
+| 🟣 | Claude (Pro/API) | Intelligent processing |
+| 💾 | Google Sheets | Main storage and evaluation (only final data + formulas) |
+| 📄 | Google Drive | Documents and proposals |
+| 🌐 | External APIs | Data enrichment |
+| ⚡ | Sheets Formulas | Calculations, matching, and automation |
+| 👤 | Manual | Human intervention |
 
 ---
 
-## Matriz de Responsabilidades
+## Responsibility Matrix
 
 ```
-Sistema 1 (Carga de Capacidades)
-├── Trigger: Cambios en LinkedIn/Proyectos
-├── Responsable: Claude Skill
-├── Datos: Google Sheets (Inventario_Capacidades)
-└── Frecuencia: Event-driven (manual + monitoreo)
+System 1 (Capability Loading)
+├── Trigger: Changes in LinkedIn/Projects
+├── Responsible: Claude Skill
+├── Data: Google Sheets (Inventory_Capabilities)
+└── Frequency: Event-driven (manual + monitoring)
 
-Sistema 2 (Evaluación y Captura de Ofertas)
-├── Trigger: Nuevo email
-├── Procesamiento: Google Apps Script (cron cada 4 horas)
-├── Responsable: Google Apps Script (extracción/enriquecimiento) + Fórmulas Sheets (evaluación)
-├── Datos: 
-│   ├── Hoja "Evaluación": Datos procesados + fórmulas de matching y scoring
-│   └── Backlog priorizado: Vista ordenada automáticamente
-├── Ubicación del enriquecimiento: Dentro del Google Apps Script del Drive
-└── Frecuencia: Cada 4 horas (automático)
+System 2 (Offer Evaluation and Capture)
+├── Trigger: New email
+├── Processing: Google Apps Script (cron every 4 hours)
+├── Responsible: Google Apps Script (extraction/enrichment) + Sheets Formulas (evaluation)
+├── Data: 
+│   ├── "Evaluation" sheet: Processed data + matching and scoring formulas
+│   └── Prioritized backlog: Automatically sorted view
+├── Enrichment location: Inside the Google Apps Script in Drive
+└── Frequency: Every 4 hours (automatic)
 
-Sistema 3 (Elaboración de Propuestas)
-├── Trigger: Revisión manual de backlog
-├── Responsable: Claude API + Manual humano
-├── Datos: Google Sheets (Estado) + Google Drive (Propuestas)
-└── Frecuencia: A demanda
+System 3 (Proposal Development)
+├── Trigger: Manual backlog review
+├── Responsible: Claude API + Human manual
+├── Data: Google Sheets (Status) + Google Drive (Proposals)
+└── Frequency: On demand
 ```
 
 ---
 
-## Implementación: Tecnologías Clave
+## Implementation: Key Technologies
 
 ### Google Workspace
-- **Gmail API**: Leer emails y enviar propuestas
-- **Sheets API**: CRUD en tablas (ofertas, backlog, inventario) - solo datos finales
-- **Drive API**: Guardar propuestas generadas
-- **Apps Script**: Procesamiento automático integrado con Cron (extracción cada 4h, validación, enriquecimiento desde APIs)
+- **Gmail API**: Read emails and send proposals
+- **Sheets API**: CRUD on tables (offers, backlog, inventory) - only final data
+- **Drive API**: Save generated proposals
+- **Apps Script**: Automatic integrated processing with Cron (extraction every 4h, validation, enrichment from APIs)
 
-### Fórmulas y Automatización en Google Sheets
-- **VLOOKUP / INDEX-MATCH**: Recuperar skills del Inventario_Capacidades
-- **Fórmulas de Matching**: Calcular coincidencia porcentual entre skills requeridos y disponibles
-- **Scoring**: Algoritmo para priorización basado en match y factores adicionales
-- **Ordenamiento automático**: Backlog priorizado se actualiza automáticamente
+### Formulas and Automation in Google Sheets
+- **VLOOKUP / INDEX-MATCH**: Retrieve skills from Inventory_Capabilities
+- **Matching Formulas**: Calculate percentage match between required and available skills
+- **Scoring**: Algorithm for prioritization based on match and additional factors
+- **Automatic Sorting**: Prioritized backlog updates automatically
 
 ### Claude
-- **Claude Skill**: Carga puntual de capacidades (event-driven)
-- **Claude API**: Generación de propuestas en tiempo real
+- **Claude Skill**: Point-in-time capability loading (event-driven)
+- **Claude API**: Real-time proposal generation
 
-### Datos Externos
-- **Freelancer.com API**: Enriquecer ofertas dentro del Google Apps Script
-- **LinkedIn**: Perfil y certificaciones (lectura manual/automatizada)
-- **Google Drive**: Almacenar proyectos y casos de éxito
+### External Data
+- **Freelancer.com API**: Enrich offers within Google Apps Script
+- **LinkedIn**: Profile and certifications (manual/automated reading)
+- **Google Drive**: Store projects and success cases
+
