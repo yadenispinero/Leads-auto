@@ -165,20 +165,48 @@ Date | Sender | Company | Description | URL | Hash | Status
 + Budget | Required Skills | Complexity | Platform
 ```
 
+**Script writes to columns A-L only:**
+- Platform | Title | Domain/Sector | Tools/Skills | Rate | Language | Location | Business Sector | + 4 more enriched fields
+- **No relevance criteria applied at this stage** — pure data extraction and storage
+
 #### 2.2 - Evaluation and Prioritization (Google Sheets)
 Evaluation and prioritization is performed **completely in the "Evaluation" spreadsheet** using Google Sheets formulas that automatically query the `Inventory_Capabilities`.
 
+The validation happens in **two distinct formula-driven steps**:
+
+##### Step A: Veto Check (Column N)
+Formulas read live from **Reglas_Freelance** sheet and apply hard filters:
+- **Language** ← Must match rules
+- **Location** ← Must match rules
+- **Business Sector** ← Must match rules
+- **Minimum Rate** ← Must meet threshold
+
+**Result:** If ANY filter triggers → Status = **DESCARTADO-VETO**, Score = 0
+
+##### Step B: Capability Match (Column O-P)
+If no veto, formulas attempt to match the lead against **Inventory_Capacidades** (14 rows):
+- Search for **Elemento_Clave** (key words) in lead's Title + Domain + Tools
+- Look for reasonable keyword overlap with available skills
+- If NO match found or Fit is too low → Status = **DESCARTADO-LOW-MATCH**, Score stays below threshold
+
+**Result:** Only leads with both veto clearance AND reasonable skill match advance to the backlog
+
 | Step | Tool | Description |
 |------|------|------------|
-| 2.7 | 💾 Google Sheets | Save completely processed and enriched data in "Evaluation" sheet |
-| 2.8 | 📊 Formulas | Retrieve available skills from `Inventory_Capabilities` (VLOOKUP/INDEX-MATCH) |
-| 2.9 | 📊 Formulas | Calculate initial match between offer and available skills |
-| 2.10 | 📊 Formulas | Calculate score (0-100) based on match and prioritization factors |
+| 2.7 | 💾 Google Sheets | Save completely processed and enriched data in "Evaluation" sheet (A-L) |
+| 2.8 | 📊 Formulas (Col N) | **Veto validation:** Check Language, Location, Sector, Rate against Reglas_Freelance |
+| 2.9 | 📊 Formulas (Col O) | **Capability Fit:** Match Title/Domain/Tools against Inventory_Capacidades keywords |
+| 2.10 | 📊 Formulas (Col P) | Calculate Score (0-100) based on match % and prioritization factors |
 | 2.11 | 📋 Google Sheets | Save to "Prioritized backlog" (sorted by score, updated automatically) |
 
 **Schema in Google Sheets "Evaluation":**
 ```
 Offer | Budget | Required Skills | Available Skills | Match % | Score | Priority | Status | Assigned
+├─ Status values:
+│  ├─ DESCARTADO-VETO → Failed veto filters (language, location, sector, rate)
+│  ├─ DESCARTADO-LOW-MATCH → Passed veto but no skill match found
+│  ├─ PENDIENTE → Awaiting review
+│  └─ SELECCIONADO → Ready for proposal
 ```
 
 ---
@@ -244,12 +272,25 @@ System 1 (Capability Loading)
 
 System 2 (Offer Evaluation and Capture)
 ├── Trigger: New email
-├── Processing: Google Apps Script (cron every 4 hours)
-├── Responsible: Google Apps Script (extraction/enrichment) + Sheets Formulas (evaluation)
-├── Data: 
-│   ├── "Evaluation" sheet: Processed data + matching and scoring formulas
-│   └── Prioritized backlog: Automatically sorted view
-├── Enrichment location: Inside the Google Apps Script in Drive
+├── Processing Stage 1: Google Apps Script (cron every 4 hours)
+│   ├── Role: Extract and write raw data (columns A-L)
+│   ├── Columns: Platform, Title, Domain, Tools, Rate, Language, Location, Sector, + enrichment
+│   ├── No criteria applied: pure data collection
+│   └── Hash check: Detect and skip duplicates
+│
+├── Processing Stage 2: Google Sheets Formulas (Evaluation sheet)
+│   ├── Veto Filter (Column N): Language, Location, Sector, Rate vs Reglas_Freelance
+│   │   └── Result: DESCARTADO-VETO or PASS
+│   ├── Capability Match (Column O): Title/Domain/Tools vs Inventory_Capacidades keywords
+│   │   └── Result: DESCARTADO-LOW-MATCH or PASS
+│   ├── Scoring (Column P): Calculate 0-100 score if both stages pass
+│   │   └── Result: Score value or below-threshold
+│   └── Output: "Prioritized backlog" (auto-sorted by score)
+│
+├── Data flow: 
+│   └── "Evaluation" sheet: Processed data (A-L) + Veto/Match/Score formulas (N-P)
+│   └── "Prioritized backlog": Automatically sorted view (high score first)
+│
 └── Frequency: Every 4 hours (automatic)
 
 System 3 (Proposal Development)
@@ -271,8 +312,9 @@ System 3 (Proposal Development)
 
 ### Formulas and Automation in Google Sheets
 - **VLOOKUP / INDEX-MATCH**: Retrieve skills from Inventory_Capabilities
-- **Matching Formulas**: Calculate percentage match between required and available skills
-- **Scoring**: Algorithm for prioritization based on match and additional factors
+- **Veto Filters**: Hard rules from Reglas_Freelance (language, location, sector, rate)
+- **Keyword Matching**: Search Elemento_Clave from Inventory_Capacidades in lead fields
+- **Scoring**: Algorithm for prioritization based on match % and additional factors
 - **Automatic Sorting**: Prioritized backlog updates automatically
 
 ### Claude
@@ -283,4 +325,3 @@ System 3 (Proposal Development)
 - **Freelancer.com API**: Enrich offers within Google Apps Script
 - **LinkedIn**: Profile and certifications (manual/automated reading)
 - **Google Drive**: Store projects and success cases
-
