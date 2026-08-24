@@ -4,7 +4,7 @@ Documentation of the different perspectives of the lead automation system.
 
 ## 📋 Table of Contents
 
-### 1. [Processes and Steps View](./procesos.md)
+### 1. [Processes and Steps View](./processes.md)
 Detailed workflow of processes, activities, decisions, and executable steps of the system.
 
 **Includes:**
@@ -13,7 +13,7 @@ Detailed workflow of processes, activities, decisions, and executable steps of t
 - Decision points
 - Gatekeepers and validations
 
-### 2. [Technological Components View](./componentes-tecnologicos.md)
+### 2. [Technological Components View](./components.md)
 Architecture of integrations, tools, and technological systems.
 
 **Includes:**
