@@ -1,97 +1,97 @@
-# Vista de Componentes Tecnológicos - Leads Auto
+# Technology Components View - Leads Auto
 
-Descripción detallada de los componentes tecnológicos, integraciones y flujos de datos del sistema.
-
----
-
-## 📋 Leyenda de Estados y Estilos
-
-### Estados de Componentes
-
-```
-🟢 TERMINADO (v1)       → Componente implementado y funcional
-🟡 EN DESARROLLO        → Componente iniciado pero no terminado
-🔴 PROYECTADO           → Componente diseñado pero no iniciado
-```
-
-### Significado de Colores en Gráficos
-
-| Color | Tipo | Significado |
-|-------|------|------------|
-| 🔵 **Azul** (`#e3f2fd`) | Gmail y APIs de entrada | Punto de entrada del sistema, lectura de datos externos |
-| 🟣 **Púrpura** (`#f3e5f5`) | Procesamiento/Claude | Lógica inteligente, transformación, generación de contenido |
-| 🟢 **Verde** (`#e8f5e9`) | Almacenamiento | Bases de datos, Google Sheets, persistencia de datos |
-| 🟠 **Naranja** (`#fff3e0`) | Integraciones Externas | APIs externas, fuentes de datos terceros |
-
-### Tipos de Líneas en Gráficos
-
-| Línea | Tipo | Significado |
-|-------|------|------------|
-| `→` **Línea sólida** | Flujo principal directo | Datos fluyen directamente de componente a componente |
-| `-.->` **Línea punteada** | Flujo de referencia | Consulta/lectura sin modificar datos (VLOOKUP, references) |
-| **Grosor normal** | Proceso estándar | Operación regular del sistema |
-| **Grosor triple** | Proceso crítico | Operación importante, trigger, punto de decisión |
-| **Línea discontinua** | Conexión condicional | Sucede bajo ciertas condiciones |
-
-### Leyenda de Símbolos en Nodos
-
-| Símbolo | Significado |
-|---------|------------|
-| 📧 | Gmail, Email, comunicación |
-| ⚙️ | Procesamiento, Scripts, automatización |
-| 💾 | Almacenamiento, base de datos |
-| 🔗 | Conexión externa, API, integración |
-| 🟢/🟡/🔴 | Estado: Terminado / En desarrollo / Proyectado |
+Detailed description of technological components, integrations, and system data flows.
 
 ---
 
-## Arquitectura de Componentes (Por Capas)
+## 📋 Legend of States and Styles
+
+### Component States
+
+```
+🟢 COMPLETED (v1)       → Component implemented and functional
+🟡 IN DEVELOPMENT       → Component initiated but not finished
+🔴 PLANNED              → Component designed but not started
+```
+
+### Meaning of Colors in Graphs
+
+| Color | Type | Meaning |
+|-------|------|---------|
+| 🔵 **Blue** (`#e3f2fd`) | Gmail and input APIs | System entry point, reading external data |
+| 🟣 **Purple** (`#f3e5f5`) | Processing/Claude | Intelligent logic, transformation, content generation |
+| 🟢 **Green** (`#e8f5e9`) | Storage | Databases, Google Sheets, data persistence |
+| 🟠 **Orange** (`#fff3e0`) | External Integrations | External APIs, third-party data sources |
+
+### Types of Lines in Graphs
+
+| Line | Type | Meaning |
+|------|------|---------|
+| `→` **Solid line** | Direct main flow | Data flows directly from component to component |
+| `-.->` **Dotted line** | Reference flow | Query/read without modifying data (VLOOKUP, references) |
+| **Normal thickness** | Standard process | Regular system operation |
+| **Triple thickness** | Critical process | Important operation, trigger, decision point |
+| **Dashed line** | Conditional connection | Happens under certain conditions |
+
+### Legend of Symbols in Nodes
+
+| Symbol | Meaning |
+|--------|---------|
+| 📧 | Gmail, Email, communication |
+| ⚙️ | Processing, Scripts, automation |
+| 💾 | Storage, database |
+| 🔗 | External connection, API, integration |
+| 🟢/🟡/🔴 | State: Completed / In development / Planned |
+
+---
+
+## Architecture of Components (By Layers)
 
 ```mermaid
 graph TB
-    subgraph "📧 Capa de Entrada"
-        Gmail["📧 Gmail<br/>(Buzón de oportunidades)"]
-        GmailAPI["🔵 Gmail API<br/>(Lectura de emails)"]
+    subgraph "📧 Input Layer"
+        Gmail["📧 Gmail<br/>(Opportunity inbox)"]
+        GmailAPI["🔵 Gmail API<br/>(Email reading)"]
     end
 
-    subgraph "⚙️ Capa de Procesamiento"
-        GAS["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
+    subgraph "⚙️ Processing Layer"
+        GAS["⚙️ Google Apps Script<br/>(Cron every 4 hours)"]
         
-        subgraph Claude["🟣 CLAUDE (Inteligencia)"]
-            ClaudeSkill["Claude Skill<br/>(Extracción capacidades)"]
-            ClaudeAPI["Claude API<br/>(Generación propuestas)"]
+        subgraph Claude["🟣 CLAUDE (Intelligence)"]
+            ClaudeSkill["Claude Skill<br/>(Capability extraction)"]
+            ClaudeAPI["Claude API<br/>(Proposal generation)"]
         end
     end
 
-    subgraph "💾 Capa de Almacenamiento"
-        SheetsInventario["💾 Google Sheets<br/>Inventario_Capacidades"]
-        SheetsEvaluacion["💾 Google Sheets<br/>Evaluación Fórmulas"]
-        SheetsBacklog["💾 Google Sheets<br/>Backlog Priorizado"]
-        Drive["📄 Google Drive<br/>(Propuestas guardadas)"]
+    subgraph "💾 Storage Layer"
+        SheetsInventario["💾 Google Sheets<br/>Inventory_Capabilities"]
+        SheetsEvaluacion["💾 Google Sheets<br/>Evaluation Formulas"]
+        SheetsBacklog["💾 Google Sheets<br/>Prioritized Backlog"]
+        Drive["📄 Google Drive<br/>(Saved proposals)"]
     end
 
-    subgraph "🔗 Integraciones Externas"
-        Freelancer["🌐 Freelancer.com API<br/>(Enriquecimiento)"]
-        LinkedIn["🌐 LinkedIn<br/>(Perfil y certificaciones)"]
+    subgraph "🔗 External Integrations"
+        Freelancer["🌐 Freelancer.com API<br/>(Enrichment)"]
+        LinkedIn["🌐 LinkedIn<br/>(Profile and certifications)"]
     end
 
-    %% Conexiones
+    %% Connections
     Gmail --> GmailAPI
     GmailAPI --> GAS
     GAS --> Freelancer
     GAS --> SheetsEvaluacion
     
     SheetsInventario -.->|VLOOKUP/INDEX-MATCH| SheetsEvaluacion
-    SheetsEvaluacion -.->|Ordenamiento automático| SheetsBacklog
+    SheetsEvaluacion -.->|Automatic sorting| SheetsBacklog
     
     ClaudeSkill --> SheetsInventario
-    LinkedIn -.->|Lectura manual| ClaudeSkill
+    LinkedIn -.->|Manual reading| ClaudeSkill
     
     SheetsBacklog --> ClaudeAPI
     ClaudeAPI --> Drive
     Drive --> Gmail
     
-    SheetsInventario -.->|Referencia| ClaudeAPI
+    SheetsInventario -.->|Reference| ClaudeAPI
 
     classDef entrada fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
     classDef proceso fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
@@ -109,26 +109,26 @@ graph TB
 
 ---
 
-## Componentes con Estados de Implementación
+## Components with Implementation States
 
 ```mermaid
 graph TB
-    subgraph "🟢 TERMINADO (v1)"
+    subgraph "🟢 COMPLETED (v1)"
         T1["📧 Gmail API"]
-        T2["💾 Google Sheets<br/>Inventario_Capacidades"]
-        T3["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
-        T4["💾 Google Sheets<br/>Evaluación (Fórmulas)"]
+        T2["💾 Google Sheets<br/>Inventory_Capabilities"]
+        T3["⚙️ Google Apps Script<br/>(Cron every 4 hours)"]
+        T4["💾 Google Sheets<br/>Evaluation (Formulas)"]
     end
 
-    subgraph "🟡 EN DESARROLLO"
-        D1["💾 Google Sheets<br/>Backlog Priorizado"]
-        D2["🟣 Claude Skill<br/>(Extracción capacidades)"]
+    subgraph "🟡 IN DEVELOPMENT"
+        D1["💾 Google Sheets<br/>Prioritized Backlog"]
+        D2["🟣 Claude Skill<br/>(Capability extraction)"]
     end
 
-    subgraph "🔴 PROYECTADO"
-        P1["🟣 Claude API<br/>(Generación propuestas)"]
-        P2["📄 Google Drive<br/>(Almacenamiento propuestas)"]
-        P3["🌐 Freelancer.com API<br/>(Enriquecimiento)"]
+    subgraph "🔴 PLANNED"
+        P1["🟣 Claude API<br/>(Proposal generation)"]
+        P2["📄 Google Drive<br/>(Proposal storage)"]
+        P3["🌐 Freelancer.com API<br/>(Enrichment)"]
         P4["📊 Dashboard KPIs"]
     end
 
@@ -151,53 +151,53 @@ graph TB
 
 ---
 
-## Arquitectura de Componentes (Por Capas) - Detallado con Iconos
+## Architecture of Components (By Layers) - Detailed with Icons
 
 ```mermaid
 graph TB
-    subgraph "📧 CAPA DE ENTRADA"
-        Gmail["📧 Gmail<br/>(Buzón de oportunidades)<br/>🟢 TERMINADO"]
-        GmailAPI["🔵 Gmail API<br/>(Lectura de emails)<br/>🟢 TERMINADO"]
+    subgraph "📧 INPUT LAYER"
+        Gmail["📧 Gmail<br/>(Opportunity inbox)<br/>🟢 COMPLETED"]
+        GmailAPI["🔵 Gmail API<br/>(Email reading)<br/>🟢 COMPLETED"]
     end
 
-    subgraph "⚙️ CAPA DE PROCESAMIENTO"
-        GAS["⚙️ Google Apps Script<br/>(Cron cada 4 horas)<br/>🟢 TERMINADO"]
+    subgraph "⚙️ PROCESSING LAYER"
+        GAS["⚙️ Google Apps Script<br/>(Cron every 4 hours)<br/>🟢 COMPLETED"]
         
-        subgraph Claude["🟣 CLAUDE (IA/Inteligencia AI)"]
-            ClaudeSkill["🟣 Claude Skill<br/>(Extracción capacidades)<br/>🟡 EN DESARROLLO"]
-            ClaudeAPI["🟣 Claude API<br/>(Generación propuestas)<br/>🔴 PROYECTADO"]
+        subgraph Claude["🟣 CLAUDE (AI/Artificial Intelligence)"]
+            ClaudeSkill["🟣 Claude Skill<br/>(Capability extraction)<br/>🟡 IN DEVELOPMENT"]
+            ClaudeAPI["🟣 Claude API<br/>(Proposal generation)<br/>🔴 PLANNED"]
         end
     end
 
-    subgraph "💾 CAPA DE ALMACENAMIENTO"
-        SheetsInventario["💾 Google Sheets<br/>Inventario_Capacidades<br/>🟢 TERMINADO"]
-        SheetsEvaluacion["💾 Google Sheets<br/>Evaluación Fórmulas<br/>🟢 TERMINADO"]
-        SheetsBacklog["💾 Google Sheets<br/>Backlog Priorizado<br/>🟡 EN DESARROLLO"]
-        Drive["📄 Google Drive<br/>(Propuestas guardadas)<br/>🔴 PROYECTADO"]
+    subgraph "💾 STORAGE LAYER"
+        SheetsInventario["💾 Google Sheets<br/>Inventory_Capabilities<br/>🟢 COMPLETED"]
+        SheetsEvaluacion["💾 Google Sheets<br/>Evaluation Formulas<br/>🟢 COMPLETED"]
+        SheetsBacklog["💾 Google Sheets<br/>Prioritized Backlog<br/>🟡 IN DEVELOPMENT"]
+        Drive["📄 Google Drive<br/>(Saved proposals)<br/>🔴 PLANNED"]
     end
 
-    subgraph "🔗 INTEGRACIONES EXTERNAS"
-        Freelancer["🌐 Freelancer.com API<br/>(Enriquecimiento)<br/>🔴 PROYECTADO"]
-        LinkedIn["🌐 LinkedIn<br/>(Perfil y certificaciones)<br/>🟡 EN DESARROLLO"]
+    subgraph "🔗 EXTERNAL INTEGRATIONS"
+        Freelancer["🌐 Freelancer.com API<br/>(Enrichment)<br/>🔴 PLANNED"]
+        LinkedIn["🌐 LinkedIn<br/>(Profile and certifications)<br/>🟡 IN DEVELOPMENT"]
     end
 
-    %% Conexiones
+    %% Connections
     Gmail --> GmailAPI
     GmailAPI --> GAS
     GAS --> Freelancer
     GAS --> SheetsEvaluacion
     
     SheetsInventario -.->|VLOOKUP/INDEX-MATCH| SheetsEvaluacion
-    SheetsEvaluacion -.->|Ordenamiento automático| SheetsBacklog
+    SheetsEvaluacion -.->|Automatic sorting| SheetsBacklog
     
     ClaudeSkill --> SheetsInventario
-    LinkedIn -.->|Lectura manual| ClaudeSkill
+    LinkedIn -.->|Manual reading| ClaudeSkill
     
     SheetsBacklog --> ClaudeAPI
     ClaudeAPI --> Drive
     Drive --> Gmail
     
-    SheetsInventario -.->|Referencia| ClaudeAPI
+    SheetsInventario -.->|Reference| ClaudeAPI
 
     classDef entrada fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
     classDef proceso fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
@@ -215,21 +215,21 @@ graph TB
 
 ---
 
-## Resumen Visual: Integraciones y Flujo Completo
+## Summary: Integrations and Complete Flow
 
 ```mermaid
 graph LR
-    A["🔵 Gmail API<br/>(Lectura)<br/>🟢"] --> B["⚙️ Google Apps Script<br/>(Cron 4h)<br/>🟢"]
-    B --> C["💾 Google Sheets<br/>(Evaluación)<br/>🟢"]
-    B --> D["🌐 Freelancer.com<br/>(Enriquecimiento)<br/>🔴"]
-    C --> E["💾 Backlog<br/>(Ordenado)<br/>🟡"]
-    E --> F["🟣 Claude API<br/>(Propuestas)<br/>🔴"]
-    F --> G["📄 Google Drive<br/>(Almacenamiento)<br/>🔴"]
-    G --> H["🔵 Gmail API<br/>(Envío)<br/>🟢"]
+    A["🔵 Gmail API<br/>(Read)<br/>🟢"] --> B["⚙️ Google Apps Script<br/>(Cron 4h)<br/>🟢"]
+    B --> C["💾 Google Sheets<br/>(Evaluation)<br/>🟢"]
+    B --> D["🌐 Freelancer.com<br/>(Enrichment)<br/>🔴"]
+    C --> E["💾 Backlog<br/>(Sorted)<br/>🟡"]
+    E --> F["🟣 Claude API<br/>(Proposals)<br/>🔴"]
+    F --> G["📄 Google Drive<br/>(Storage)<br/>🔴"]
+    G --> H["🔵 Gmail API<br/>(Send)<br/>🟢"]
     
-    I["💾 Inventario_Capacidades<br/>🟢"] -.-> C
-    J["🟣 Claude Skill<br/>(Extracción)<br/>🟡"] --> I
-    J -.-> K["🌐 LinkedIn<br/>(Fuente)<br/>🟡"]
+    I["💾 Inventory_Capabilities<br/>🟢"] -.-> C
+    J["🟣 Claude Skill<br/>(Extraction)<br/>🟡"] --> I
+    J -.-> K["🌐 LinkedIn<br/>(Source)<br/>🟡"]
     
     style A fill:#e3f2fd,stroke:#1976d2
     style B fill:#f3e5f5,stroke:#7b1fa2
@@ -244,78 +244,78 @@ graph LR
     style K fill:#fff3e0,stroke:#e65100
 ```
 
-### 📌 Leyenda del Gráfico Final
+### 📌 Legend of the Final Graph
 
-**Bolitas de colores al lado derecho:**
-- 🟢 = Componente ya terminado (implementado y funcional)
-- 🟡 = Componente en desarrollo (parcialmente implementado)
-- 🔴 = Componente proyectado (diseñado pero no iniciado)
+**Color dots on the right:**
+- 🟢 = Component already completed (implemented and functional)
+- 🟡 = Component in development (partially implemented)
+- 🔴 = Component planned (designed but not started)
 
-**Colores de fondo (nodos):**
-- 🔵 Azul = Componentes de Gmail/Email
-- 🟣 Púrpura = Componentes de Claude/IA
-- 🟢 Verde = Almacenamiento (Sheets, Drive)
-- 🟠 Naranja = Integraciones externas (APIs)
+**Background colors (nodes):**
+- 🔵 Blue = Gmail/Email components
+- 🟣 Purple = Claude/AI components
+- 🟢 Green = Storage (Sheets, Drive)
+- 🟠 Orange = External integrations (APIs)
 
-**Tipos de líneas:**
-- `→` Flujo principal (datos se transforman/procesan)
-- `-.->` Flujo de referencia (lectura sin modificación)
-
----
-
-## Componentes Detallados
-
-### 1. 🔵 Gmail y Gmail API | 🟢 TERMINADO
-**Función:** Punto de entrada del sistema, lectura de oportunidades.
-
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟢 Terminado (v1) |
-| **Tipo** | Servicio de email + API |
-| **Rol** | Recibir oportunidades, enviar propuestas |
-| **Trigger** | Nuevo email en buzón específico |
-| **Frecuencia de lectura** | Cada 4 horas (via Google Apps Script Cron) |
-| **Datos de entrada** | Email raw (remitente, asunto, cuerpo, adjuntos) |
-| **Autenticación** | OAuth 2.0 |
-
-**Campos extraídos:**
-```
-From: remitente@empresa.com
-Subject: Oportunidad de proyecto
-Body: Descripción, requirements, presupuesto (opcional)
-```
+**Types of lines:**
+- `→` Main flow (data transforms/processes)
+- `-.->` Reference flow (read without modification)
 
 ---
 
-### 2. ⚙️ Google Apps Script (Cron - Cada 4 horas) | 🟢 TERMINADO
-**Función:** Procesamiento automático de emails en intervalos regulares.
+## Detailed Components
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟢 Terminado (v1) |
-| **Tipo** | Automatización serverless |
-| **Rol** | Orquestación de procesamiento, extracción, validación, enriquecimiento |
-| **Trigger** | Cron cada 4 horas |
-| **Ubicación** | Google Drive (associated script) |
-| **Dependencias** | Gmail API, Sheets API, APIs externas |
+### 1. 🔵 Gmail and Gmail API | 🟢 COMPLETED
+**Function:** System entry point, reading opportunities.
 
-**Responsabilidades:**
+| Property | Description |
+|----------|------------|
+| **Status** | 🟢 Completed (v1) |
+| **Type** | Email service + API |
+| **Role** | Receive opportunities, send proposals |
+| **Trigger** | New email in specific inbox |
+| **Read Frequency** | Every 4 hours (via Google Apps Script Cron) |
+| **Input Data** | Raw email (sender, subject, body, attachments) |
+| **Authentication** | OAuth 2.0 |
+
+**Extracted Fields:**
 ```
-1. Leer emails no procesados
-2. Extraer: remitente, empresa, descripción, URL, presupuesto
-3. Generar hash para detección de duplicados
-4. Consultar Google Sheets: ¿Ya procesado?
-5. Si es duplicado: marcar y descartar
-6. Si es nuevo: normalizar datos
-7. Enriquecer desde Freelancer.com API (si necesario)
-8. Guardar datos procesados en hoja "Evaluación"
-9. Permitir que fórmulas de Sheets hagan el matching y scoring
+From: sender@company.com
+Subject: Project Opportunity
+Body: Description, requirements, budget (optional)
 ```
 
-**Pseudocódigo:**
+---
+
+### 2. ⚙️ Google Apps Script (Cron - Every 4 hours) | 🟢 COMPLETED
+**Function:** Automatic email processing at regular intervals.
+
+| Property | Description |
+|----------|------------|
+| **Status** | 🟢 Completed (v1) |
+| **Type** | Serverless automation |
+| **Role** | Processing orchestration, extraction, validation, enrichment |
+| **Trigger** | Cron every 4 hours |
+| **Location** | Google Drive (associated script) |
+| **Dependencies** | Gmail API, Sheets API, external APIs |
+
+**Responsibilities:**
+```
+1. Read unprocessed emails
+2. Extract: sender, company, description, URL, budget
+3. Generate hash for duplicate detection
+4. Query Google Sheets: Already processed?
+5. If duplicate: mark and discard
+6. If new: normalize data
+7. Enrich from Freelancer.com API (if necessary)
+8. Save processed data in "Evaluation" sheet
+9. Allow Sheets formulas to do matching and scoring
+```
+
+**Pseudocode:**
 ```javascript
 function processEmailsCron() {
-  // Ejecutado cada 4 horas
+  // Executed every 4 hours
   const unprocessedEmails = getUnprocessedEmails();
   
   unprocessedEmails.forEach(email => {
@@ -337,323 +337,323 @@ function processEmailsCron() {
 
 ---
 
-### 3. 💾 Google Sheets: Inventario_Capacidades | 🟢 TERMINADO
-**Función:** Almacenar el inventario actualizado de skills, certifications y proyectos.
+### 3. 💾 Google Sheets: Inventory_Capabilities | 🟢 COMPLETED
+**Function:** Store updated inventory of skills, certifications, and projects.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟢 Terminado (v1) |
-| **Tipo** | Hoja de cálculo (Google Sheets) |
-| **Rol** | Fuente única de verdad para capacidades |
-| **Actualización** | Event-driven (via Claude Skill) |
-| **Acceso** | VLOOKUP/INDEX-MATCH desde Evaluación |
+| Property | Description |
+|----------|------------|
+| **Status** | 🟢 Completed (v1) |
+| **Type** | Spreadsheet (Google Sheets) |
+| **Role** | Single source of truth for capabilities |
+| **Update** | Event-driven (via Claude Skill) |
+| **Access** | VLOOKUP/INDEX-MATCH from Evaluation |
 
 **Schema:**
 ```
-| Skill | Nivel | Tipo | Proyectos | Certificaciones | LinkedIn URL | Última actualización |
-|-------|-------|------|-----------|-----------------|--------------|---------------------|
-| Python | Avanzado | Lenguaje | [links] | [certs] | https://... | 2026-08-24 |
-| React | Intermedio | Framework | [links] | - | https://... | 2026-08-20 |
+| Skill | Level | Type | Projects | Certifications | LinkedIn URL | Last updated |
+|-------|-------|------|----------|-----------------|--------------|--------------|
+| Python | Advanced | Language | [links] | [certs] | https://... | 2026-08-24 |
+| React | Intermediate | Framework | [links] | - | https://... | 2026-08-20 |
 | ...
 ```
 
-**Niveles permitidos:** Básico, Intermedio, Avanzado, Experto
+**Allowed Levels:** Basic, Intermediate, Advanced, Expert
 
 ---
 
-### 4. 💾 Google Sheets: Evaluación (Fórmulas) | 🟢 TERMINADO
-**Función:** Procesar ofertas con fórmulas, calcular match y scoring automáticamente.
+### 4. 💾 Google Sheets: Evaluation (Formulas) | 🟢 COMPLETED
+**Function:** Process offers with formulas, calculate match and scoring automatically.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟢 Terminado (v1) |
-| **Tipo** | Hoja de cálculo con fórmulas (Google Sheets) |
-| **Rol** | Evaluación automática, matching y scoring |
-| **Actualización** | Automática (datos de Google Apps Script + fórmulas) |
-| **Referencia** | Inventario_Capacidades |
+| Property | Description |
+|----------|------------|
+| **Status** | 🟢 Completed (v1) |
+| **Type** | Spreadsheet with formulas (Google Sheets) |
+| **Role** | Automatic evaluation, matching and scoring |
+| **Update** | Automatic (data from Google Apps Script + formulas) |
+| **Reference** | Inventory_Capabilities |
 
-**Schema con Fórmulas:**
+**Schema with Formulas:**
 ```
-| Fecha | Remitente | Empresa | Descripción | Presupuesto | Skills requeridas | 
-| Skills disponibles* | Match %** | Score*** | Prioridad | Estado | Asignado |
+| Date | Sender | Company | Description | Budget | Required Skills | 
+| Available Skills* | Match %** | Score*** | Priority | Status | Assigned |
 
-*VLOOKUP formula: =VLOOKUP(A2, Inventario_Capacidades!A:Z, 2, FALSE)
-**Fórmula de matching: porcentaje de skills disponibles vs requeridas
-***Score: algoritmo de priorización (match + presupuesto + complejidad)
+*VLOOKUP formula: =VLOOKUP(A2, Inventory_Capabilities!A:Z, 2, FALSE)
+**Matching formula: percentage of available vs required skills
+***Score: prioritization algorithm (match + budget + complexity)
 ```
 
-**Fórmulas Clave:**
+**Key Formulas:**
 
 **Match Score:**
 ```
-= COUNTIF(SkillsDisponibles, SkillsRequeridas) / LEN(SkillsRequeridas) * 100
+= COUNTIF(AvailableSkills, RequiredSkills) / LEN(RequiredSkills) * 100
 ```
 
-**Score Final:**
+**Final Score:**
 ```
-= (MatchScore * 0.5) + (NormalizePresupuesto * 0.3) + (Complejidad * 0.2)
+= (MatchScore * 0.5) + (NormalizedBudget * 0.3) + (Complexity * 0.2)
 ```
 
-**Ordenamiento automático:** La hoja se ordena automáticamente por Score descendente.
+**Automatic Sorting:** The sheet automatically sorts by descending Score.
 
 ---
 
-### 5. 💾 Google Sheets: Backlog Priorizado | 🟡 EN DESARROLLO
-**Función:** Vista ordenada de oportunidades listas para propuesta.
+### 5. 💾 Google Sheets: Prioritized Backlog | 🟡 IN DEVELOPMENT
+**Function:** Sorted view of opportunities ready for proposal.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟡 En desarrollo |
-| **Tipo** | Hoja ordenada (filtrada de Evaluación) |
-| **Rol** | Fuente para Sistema 3 (Propuestas) |
-| **Actualización** | Automática (basada en Evaluación) |
-| **Orden** | Score descendente (mejor match arriba) |
-
----
-
-### 6. 🟣 Claude Skill (Carga de Capacidades) | 🟡 EN DESARROLLO
-**Función:** Extracción inteligente de datos de LinkedIn y proyectos.
-
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟡 En desarrollo |
-| **Tipo** | Claude AI (Mode: Skill) |
-| **Rol** | Extracción event-driven de capacidades |
-| **Trigger** | Manual o cambios detectados |
-| **Entrada** | Perfil LinkedIn, documentos de Drive |
-| **Salida** | Datos estructurados para Inventario_Capacidades |
-
-**Proceso:**
-```
-1. Leer perfil LinkedIn (manualmente o via web scraping)
-2. Extraer: skills, nivel, experiencia
-3. Leer certificaciones y validaciones
-4. Leer proyectos de Google Drive
-5. Estructurar en formato estándar
-6. Guardar en Inventario_Capacidades
-```
+| Property | Description |
+|----------|------------|
+| **Status** | 🟡 In development |
+| **Type** | Sorted sheet (filtered from Evaluation) |
+| **Role** | Source for System 3 (Proposals) |
+| **Update** | Automatic (based on Evaluation) |
+| **Order** | Descending Score (best match first) |
 
 ---
 
-### 7. 🟣 Claude API (Generación de Propuestas) | 🔴 PROYECTADO
-**Función:** Generación automática de propuestas personalizadas.
+### 6. 🟣 Claude Skill (Capability Loading) | 🟡 IN DEVELOPMENT
+**Function:** Intelligent extraction of data from LinkedIn and projects.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🔴 Proyectado |
-| **Tipo** | Claude API (modelo: claude-opus/sonnet) |
-| **Rol** | Generación inteligente de propuestas |
-| **Trigger** | Manual (usuario selecciona oportunidad del backlog) |
-| **Entrada** | Datos de la oferta + Inventario_Capacidades |
-| **Salida** | Propuesta en formato texto/Markdown |
+| Property | Description |
+|----------|------------|
+| **Status** | 🟡 In development |
+| **Type** | Claude AI (Mode: Skill) |
+| **Role** | Event-driven capability extraction |
+| **Trigger** | Manual or detected changes |
+| **Input** | LinkedIn profile, Drive documents |
+| **Output** | Structured data for Inventory_Capabilities |
 
-**Entrada típica:**
+**Process:**
+```
+1. Read LinkedIn profile (manually or via web scraping)
+2. Extract: skills, level, experience
+3. Read certifications and validations
+4. Read projects from Google Drive
+5. Structure in standard format
+6. Save to Inventory_Capabilities
+```
+
+---
+
+### 7. 🟣 Claude API (Proposal Generation) | 🔴 PLANNED
+**Function:** Automatic generation of personalized proposals.
+
+| Property | Description |
+|----------|------------|
+| **Status** | 🔴 Planned |
+| **Type** | Claude API (model: claude-opus/sonnet) |
+| **Role** | Intelligent proposal generation |
+| **Trigger** | Manual (user selects opportunity from backlog) |
+| **Input** | Offer data + Inventory_Capabilities |
+| **Output** | Proposal in text/Markdown format |
+
+**Typical Input:**
 ```json
 {
-  "oferta": {
-    "empresa": "TechCorp",
-    "descripcion": "Desarrollar aplicación React",
-    "presupuesto": "$5000-$8000",
-    "skills_requeridas": ["React", "Node.js", "PostgreSQL"],
+  "offer": {
+    "company": "TechCorp",
+    "description": "Develop React application",
+    "budget": "$5000-$8000",
+    "required_skills": ["React", "Node.js", "PostgreSQL"],
     "deadline": "2026-09-30"
   },
-  "competencias": {
-    "skills_disponibles": ["React", "Node.js", "MongoDB", "Python"],
-    "nivel": ["Avanzado", "Avanzado", "Intermedio", "Avanzado"],
-    "proyectos_similares": [
-      "E-commerce con React y Node.js (2025)",
-      "Dashboard con React (2025)"
+  "competencies": {
+    "available_skills": ["React", "Node.js", "MongoDB", "Python"],
+    "level": ["Advanced", "Advanced", "Intermediate", "Advanced"],
+    "similar_projects": [
+      "E-commerce with React and Node.js (2025)",
+      "React Dashboard (2025)"
     ],
-    "certificaciones": ["AWS Developer", "React Advanced"]
+    "certifications": ["AWS Solutions Architect", "React Advanced"]
   },
-  "template": "propuesta_estándar_v1"
+  "template": "standard_proposal_v1"
 }
 ```
 
-**Prompt del sistema:**
+**System Prompt:**
 ```
-Eres un especialista en redacción de propuestas técnicas. 
-Basándote en la oferta y las competencias disponibles, 
-genera una propuesta profesional, personalizada y convincente 
-que destaque la alineación entre skills y requisitos.
+You are a specialist in technical proposal writing. 
+Based on the offer and available competencies, 
+generate a professional, personalized, and convincing proposal 
+that highlights the alignment between skills and requirements.
 ```
 
 ---
 
-### 8. 📄 Google Drive | 🔴 PROYECTADO
-**Función:** Almacenamiento de propuestas generadas y documentos.
+### 8. 📄 Google Drive | 🔴 PLANNED
+**Function:** Storage of generated proposals and documents.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🔴 Proyectado |
-| **Tipo** | Servicio de almacenamiento en la nube |
-| **Rol** | Guardar propuestas, proyectos, certificaciones |
-| **Estructura** | Carpetas organizadas por año/cliente |
+| Property | Description |
+|----------|------------|
+| **Status** | 🔴 Planned |
+| **Type** | Cloud storage service |
+| **Role** | Save proposals, projects, certifications |
+| **Structure** | Folders organized by year/client |
 
-**Estructura recomendada:**
+**Recommended Structure:**
 ```
 Leads-Auto/
-├── Propuestas/
+├── Proposals/
 │   ├── 2026/
-│   │   ├── Cliente-Fecha-Propuesta.pdf
+│   │   ├── Client-Date-Proposal.pdf
 │   │   └── ...
-├── Proyectos/
-│   ├── Proyecto1-Descripción.md
+├── Projects/
+│   ├── Project1-Description.md
 │   └── ...
-└── Certificaciones/
+└── Certifications/
     └── Cert-*.pdf
 ```
 
 ---
 
-### 9. 🌐 Freelancer.com API | 🔴 PROYECTADO
-**Función:** Enriquecimiento de datos de ofertas.
+### 9. 🌐 Freelancer.com API | 🔴 PLANNED
+**Function:** Offer data enrichment.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🔴 Proyectado |
-| **Tipo** | API REST externa |
-| **Rol** | Obtener información adicional sobre oportunidades |
-| **Ubicación** | Llamada desde Google Apps Script |
-| **Autenticación** | API Key |
+| Property | Description |
+|----------|------------|
+| **Status** | 🔴 Planned |
+| **Type** | External REST API |
+| **Role** | Get additional information about opportunities |
+| **Location** | Called from Google Apps Script |
+| **Authentication** | API Key |
 
-**Datos obtenidos:**
+**Data Obtained:**
 ```
-- Presupuesto típico para skill
-- Complejidad estimada
-- Tendencias de mercado
-- Skills adicionales sugeridas
+- Typical budget for skill
+- Estimated complexity
+- Market trends
+- Suggested additional skills
 ```
 
 ---
 
-### 10. 🌐 LinkedIn | 🟡 EN DESARROLLO
-**Función:** Fuente de datos para capacidades.
+### 10. 🌐 LinkedIn | 🟡 IN DEVELOPMENT
+**Function:** Data source for capabilities.
 
-| Propiedad | Descripción |
-|-----------|------------|
-| **Estado** | 🟡 En desarrollo |
-| **Tipo** | Red social profesional |
-| **Rol** | Leer perfil, skills, certificaciones |
-| **Integración** | Manual o web scraping (si es permitido) |
-
----
-
-## Flujos de Datos Principales
-
-### Flujo 1: Actualización de Capacidades (Event-driven) | 🟡 EN DESARROLLO
-```
-LinkedIn/Drive → 🟣 Claude Skill → 💾 Inventario_Capacidades → (referencia en Evaluación)
-```
-
-**Frecuencia:** Manual / Cambios detectados
+| Property | Description |
+|----------|------------|
+| **Status** | 🟡 In development |
+| **Type** | Professional social network |
+| **Role** | Read profile, skills, certifications |
+| **Integration** | Manual or web scraping (if allowed) |
 
 ---
 
-### Flujo 2: Procesamiento de Ofertas (Cada 4 horas) | 🟢 TERMINADO
+## Main Data Flows
+
+### Flow 1: Capability Update (Event-driven) | 🟡 IN DEVELOPMENT
+```
+LinkedIn/Drive → 🟣 Claude Skill → 💾 Inventory_Capabilities → (reference in Evaluation)
+```
+
+**Frequency:** Manual / Detected changes
+
+---
+
+### Flow 2: Offer Processing (Every 4 hours) | 🟢 COMPLETED
 ```
 📧 Gmail → 🔵 Gmail API → ⚙️ Google Apps Script (Cron)
-  ├─ Extraer datos
-  ├─ Validar (¿duplicado?)
-  ├─ Normalizar
-  ├─ Enriquecer (Freelancer.com API)
-  └─ Guardar en Evaluación
+  ├─ Extract data
+  ├─ Validate (Duplicate?)
+  ├─ Normalize
+  ├─ Enrich (Freelancer.com API)
+  └─ Save to Evaluation
 
-💾 Evaluación (fórmulas automáticas)
-  ├─ Recuperar skills de Inventario_Capacidades
-  ├─ Calcular match
-  ├─ Calcular score
-  └─ Ordenar automáticamente → 💾 Backlog Priorizado
+💾 Evaluation (automatic formulas)
+  ├─ Retrieve skills from Inventory_Capabilities
+  ├─ Calculate match
+  ├─ Calculate score
+  └─ Automatically sort → 💾 Prioritized Backlog
 ```
 
-**Frecuencia:** Cada 4 horas
+**Frequency:** Every 4 hours
 
 ---
 
-### Flujo 3: Generación de Propuestas (Manual) | 🔴 PROYECTADO
+### Flow 3: Proposal Generation (Manual) | 🔴 PLANNED
 ```
-Usuario selecciona en 💾 Backlog Priorizado
-  → 🟣 Claude API (input: oferta + Inventario_Capacidades)
-  → Generar propuesta
-  → Revisar/ajustar (manual)
-  → Guardar en 📄 Google Drive
-  → Enviar vía 🔵 Gmail API
+User selects in 💾 Prioritized Backlog
+  ��� 🟣 Claude API (input: offer + Inventory_Capabilities)
+  → Generate proposal
+  → Review/adjust (manual)
+  → Save to 📄 Google Drive
+  → Send via 🔵 Gmail API
 ```
 
-**Frecuencia:** A demanda
+**Frequency:** On demand
 
 ---
 
-### Flujo 4: Seguimiento y Resultados | 🔴 PROYECTADO
+### Flow 4: Tracking and Results | 🔴 PLANNED
 ```
-Propuesta enviada → Registrar en 💾 Google Sheets
-  → Calcular KPIs (tasa conversión, ingresos, etc)
-  → Mostrar en Dashboard
+Proposal sent → Record in 💾 Google Sheets
+  → Calculate KPIs (conversion rate, revenue, etc)
+  → Display in Dashboard
 ```
 
-**Frecuencia:** Automática
+**Frequency:** Automatic
 
 ---
 
-## Matriz de Tecnologías
+## Technology Matrix
 
-| Componente | Tecnología | Propósito | Frecuencia | Estado |
-|-----------|-----------|----------|-----------|--------|
-| Entrada de emails | 🔵 Gmail API | Recibir oportunidades | Cron cada 4h | 🟢 Terminado |
-| Procesamiento automático | ⚙️ Google Apps Script | Extraer, validar, enriquecer | Cada 4 horas | 🟢 Terminado |
-| Almacenamiento capacidades | 💾 Google Sheets | Inventario único de skills | Event-driven | 🟢 Terminado |
-| Evaluación ofertas | 💾 Google Sheets (fórmulas) | Matching automático | En tiempo real | 🟢 Terminado |
-| Backlog priorizado | 💾 Google Sheets (ordenado) | Vista de oportunidades | Automático | 🟡 En desarrollo |
-| Enriquecimiento datos | 🌐 Freelancer.com API | Datos adicionales | Cada 4 horas | 🔴 Proyectado |
-| Extracción capacidades | 🟣 Claude Skill | Lectura inteligente | Event-driven | 🟡 En desarrollo |
-| Generación propuestas | 🟣 Claude API | Redacción inteligente | Manual (a demanda) | 🔴 Proyectado |
-| Almacenamiento propuestas | 📄 Google Drive | Documentos finales | Manual | 🔴 Proyectado |
-| Envío propuestas | 🔵 Gmail API | Comunicación con clientes | Manual | 🟢 Terminado |
+| Component | Technology | Purpose | Frequency | Status |
+|-----------|-----------|---------|-----------|--------|
+| Email input | 🔵 Gmail API | Receive opportunities | Cron every 4h | 🟢 Completed |
+| Automatic processing | ⚙️ Google Apps Script | Extract, validate, enrich | Every 4 hours | 🟢 Completed |
+| Capability storage | 💾 Google Sheets | Unique skills inventory | Event-driven | 🟢 Completed |
+| Offer evaluation | 💾 Google Sheets (formulas) | Automatic matching | Real-time | 🟢 Completed |
+| Prioritized backlog | 💾 Google Sheets (sorted) | Opportunity view | Automatic | 🟡 In development |
+| Data enrichment | 🌐 Freelancer.com API | Additional data | Every 4 hours | 🔴 Planned |
+| Capability extraction | 🟣 Claude Skill | Intelligent reading | Event-driven | 🟡 In development |
+| Proposal generation | 🟣 Claude API | Intelligent writing | Manual (on demand) | 🔴 Planned |
+| Proposal storage | 📄 Google Drive | Final documents | Manual | 🔴 Planned |
+| Proposal sending | 🔵 Gmail API | Client communication | Manual | 🟢 Completed |
 
 ---
 
-## Consideraciones de Implementación
+## Implementation Considerations
 
 ### Performance
-- **Cron cada 4 horas:** Evita sobrecarga, procesa de forma batch
-- **Fórmulas en Sheets:** Más rápidas que API calls para operaciones simples
-- **Caché de datos:** Minimizar llamadas a APIs externas
-- **Índices:** Usar hash para detección rápida de duplicados
+- **Cron every 4 hours:** Avoids overload, processes in batch
+- **Formulas in Sheets:** Faster than API calls for simple operations
+- **Data caching:** Minimize calls to external APIs
+- **Indexes:** Use hash for quick duplicate detection
 
-### Seguridad
-- **Autenticación:** OAuth 2.0 para Gmail, API Keys seguros
-- **Datos sensibles:** No guardar credenciales en scripts
-- **Validación:** Sanitizar datos antes de enviar a APIs
+### Security
+- **Authentication:** OAuth 2.0 for Gmail, secure API Keys
+- **Sensitive data:** Don't store credentials in scripts
+- **Validation:** Sanitize data before sending to APIs
 
-### Escalabilidad
-- **Sheets:** Actualizar a AppSheet o solución más robusta si crece
-- **Cron:** Considerar Cloud Tasks/Pub-Sub para procesos más complejos
-- **Caché:** Implementar Redis si volume de datos crece
+### Scalability
+- **Sheets:** Upgrade to AppSheet or more robust solution if grows
+- **Cron:** Consider Cloud Tasks/Pub-Sub for more complex processes
+- **Cache:** Implement Redis if data volume grows
 
 ---
 
-## Resumen: Guía de Lectura de Gráficos
+## Summary: Guide to Reading Graphs
 
-### ¿Cómo leer los diagramas?
+### How to read the diagrams?
 
-1. **Colores de fondo:**
-   - 🔵 Azul = Email/APIs de lectura
-   - 🟣 Púrpura = Procesamiento e IA
-   - 🟢 Verde = Almacenamiento
-   - 🟠 Naranja = Integraciones externas
+1. **Background colors:**
+   - 🔵 Blue = Email/reading APIs
+   - 🟣 Purple = Processing and AI
+   - 🟢 Green = Storage
+   - 🟠 Orange = External integrations
 
-2. **Tipos de líneas:**
-   - Línea sólida (`→`) = Flujo principal (transformación de datos)
-   - Línea punteada (`-.->`) = Referencia (solo lectura)
+2. **Types of lines:**
+   - Solid line (`→`) = Main flow (data transformation)
+   - Dotted line (`-.->`) = Reference (read-only)
 
-3. **Estado del componente:**
-   - 🟢 Verde = Completado
-   - 🟡 Amarillo = En desarrollo
-   - 🔴 Rojo = Proyectado
+3. **Component status:**
+   - 🟢 Green = Completed
+   - 🟡 Yellow = In development
+   - 🔴 Red = Planned
 
-4. **Grupos de componentes:**
-   - Componentes de **Claude** están agrupados bajo la etiqueta **🟣 CLAUDE (IA/Inteligencia AI)**
-   - Cada capa tiene un símbolo distintivo (📧 Entrada, ⚙️ Procesamiento, 💾 Almacenamiento, 🔗 Externo)
+4. **Component groups:**
+   - **Claude** components are grouped under the label **🟣 CLAUDE (AI/Artificial Intelligence)**
+   - Each layer has a distinctive symbol (📧 Input, ⚙️ Processing, 💾 Storage, 🔗 External)
 
 ---
 
