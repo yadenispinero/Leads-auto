@@ -1,38 +1,38 @@
-# Vistas del Sistema - Leads Auto
+# System Views - Auto Leads
 
-Documentación de las diferentes perspectivas del sistema de automatización de leads.
+Documentation of the different perspectives of the lead automation system.
 
-## 📋 Índice de Vistas
+## 📋 Table of Contents
 
-### 1. [Vista de Procesos y Pasos](./procesos.md)
-Flujo detallado de procesos, actividades, decisiones y pasos ejecutables del sistema.
+### 1. [Processes and Steps View](./procesos.md)
+Detailed workflow of processes, activities, decisions, and executable steps of the system.
 
-**Incluye:**
-- Tres sistemas principales con sus pasos
-- Actividades automáticas y manuales
-- Puntos de decisión
-- Gatekeepers y validaciones
+**Includes:**
+- Three main systems with their respective steps
+- Automated and manual activities
+- Decision points
+- Gatekeepers and validations
 
-### 2. [Vista de Componentes Tecnológicos](./componentes-tecnologicos.md)
-Arquitectura de integraciones, herramientas y sistemas tecnológicos.
+### 2. [Technological Components View](./componentes-tecnologicos.md)
+Architecture of integrations, tools, and technological systems.
 
-**Incluye:**
-- Fuentes de datos externas
-- Sistemas de procesamiento
-- Bases de datos y repositorios
-- Dependencias entre componentes
+**Includes:**
+- External data sources
+- Processing systems
+- Databases and repositories
+- Component dependencies
 
 ---
 
-## 🎯 Stack Tecnológico Minimizado
+## 🎯 Minimized Tech Stack
 
-**Herramientas principales:**
+**Main tools:**
 - 🔵 **Google Workspace Business** (Gmail, Sheets, Drive, Scripts)
-- 🟣 **Claude Pro + Anthropic API** (Procesamiento IA)
-- 🌐 **APIs externas** (Freelancer.com, LinkedIn, etc.)
+- 🟣 **Claude Pro + Anthropic API** (AI Processing)
+- 🌐 **External APIs** (Freelancer.com, LinkedIn, etc.)
 
 ---
 
-## 📊 Diagrama General Integrado
+## 📊 General Integrated Diagram
 
-Para una vista completa que incluya procesos y componentes, consulta [`docs/workflow.md`](../workflow.md)
+For a full view that includes processes and components, see [`docs/workflow.md`](../workflow.md)
