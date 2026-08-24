@@ -115,11 +115,11 @@ graph TB
 graph TB
     subgraph "🟢 TERMINADO (v1)"
         T1["📧 Gmail API"]
+        D1["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
         T2["💾 Google Sheets<br/>Inventario_Capacidades"]
     end
 
     subgraph "🟡 EN DESARROLLO"
-        D1["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
         D2["💾 Google Sheets<br/>Evaluación (Fórmulas)"]
         D3["💾 Google Sheets<br/>Backlog Priorizado"]
         D4["🟣 Claude Skill<br/>(Extracción capacidades)"]
