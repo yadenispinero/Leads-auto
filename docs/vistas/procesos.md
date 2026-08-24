@@ -33,12 +33,12 @@ flowchart TD
     subgraph S2["🟢 SISTEMA 2: EVALUACIÓN Y CAPTURA DE OFERTAS"]
         direction TB
         P2_1("📧 Recibir email")
-        P2_2@{ shape: delay, label: "⏱ Google Scripts" }
+        P2_2@{ shape: delay, label: "⏱ Google Apps Script" }
         P2_3("Extraer datos esenciales<br/>remitente, empresa, descripción")
         P2_4@{ shape: diamond, label: "✓ ¿Ya procesado?" }
         P2_5@{ shape: text, label: "❌ Duplicado descartado" }
         P2_6("Normalizar datos")
-        P2_7[("💾 Google Sheets<br/>Ofertas crudas")]
+        P2_7("Enriquecer desde APIs<br/>Freelancer.com, etc")
         P2_8("Recuperar skills del<br/>Google Sheets")
         P2_9("Calcular match inicial")
         P2_10[("📋 Google Sheets<br/>Backlog priorizado")]
@@ -52,16 +52,6 @@ flowchart TD
         P2_7 --> P2_8
         P2_8 --> P2_9
         P2_9 --> P2_10
-    end
-
-    subgraph S2b["🟠 ENRIQUECIMIENTO DE DATOS"]
-        direction TB
-        P2b_1("APIs plataformas externas<br/>Freelancer.com, etc")
-        P2b_2("Obtener datos adicionales<br/>solo no procesados antes")
-        P2b_3[("💾 Google Sheets<br/>Ofertas enriquecidas")]
-
-        P2b_1 --> P2b_2
-        P2b_2 --> P2b_3
     end
 
     subgraph S3["🟡 SISTEMA 3: ELABORACIÓN DE PROPUESTAS"]
@@ -96,14 +86,12 @@ flowchart TD
     E2 --> P2_1
     P1_0 -.-> P1_1
     P1_5 -.-> P2_8
-    P2_10 --> P2b_1
-    P2b_3 --> P3_1
+    P2_10 --> P3_1
     P3_7 --> M1
 
     classDef gmail fill:#e3f2fd,stroke:#1976d2,color:#0d47a1
     classDef sistema1 fill:#f3e5f5,stroke:#7b1fa2,color:#4a148c
     classDef sistema2 fill:#e8f5e9,stroke:#388e3c,color:#1b5e20
-    classDef sistema2b fill:#fff3e0,stroke:#f57c00,color:#e65100
     classDef sistema3 fill:#fce4ec,stroke:#c2185b,color:#880e4f
     classDef seguimiento fill:#fffde7,stroke:#f9a825,color:#f57f17
     classDef manual fill:#ffebee,stroke:#d32f2f,color:#b71c1c
@@ -111,7 +99,6 @@ flowchart TD
     class Entrada gmail
     class S1 sistema1
     class S2 sistema2
-    class S2b sistema2b
     class S3 sistema3
     class Seguimiento seguimiento
     class P3_2 manual
@@ -154,47 +141,40 @@ Skill | Nivel | Proyectos | Certificaciones | LinkedIn URL | Última actualizaci
 ### 🟢 Sistema 2: Evaluación y Captura de Ofertas
 **Tipo:** Automático  
 **Frecuencia:** Tiempo real (cada email)  
-**Responsabilidad:** Filtrar duplicados y evaluar relevancia
+**Responsabilidad:** Procesar, enriquecer y evaluar ofertas para priorización
 
-#### 2.1 - Filtrado en Gmail (Google Scripts)
+#### 2.1 - Procesamiento en Google Apps Script (Drive)
+El Google Apps Script ejecuta **todo el procesamiento de forma integrada y completa** antes de guardar en Google Sheets. Ningún dato intermedio llega a la hoja.
+
 | Paso | Herramienta | Descripción |
 |------|-------------|------------|
 | 2.1 | 📧 Gmail | Recibir nuevo email con oportunidad |
-| 2.2 | 📝 Google Scripts | Ejecutar script de filtrado |
+| 2.2 | 📝 Google Apps Script | Ejecutar script de procesamiento completo |
 | 2.3 | ⚡ Automático | Extraer: remitente, empresa, descripción, URL |
 | 2.4 | ✓ Validación | Consultar Google Sheets: ¿Hash ya procesado? |
 | 2.4a | ❌ Si duplicado | Marcar como duplicado, no procesar |
-| 2.4b | ✅ Si nuevo | Continuar al paso 2.6 |
-| 2.6 | ⚡ Automático | Normalizar datos extraídos |
-| 2.7 | 💾 Google Sheets | Guardar en "Ofertas crudas" |
+| 2.4b | ✅ Si nuevo | Continuar al paso 2.5 |
+| 2.5 | ⚡ Automático | Normalizar datos extraídos |
+| 2.6 | 🌐 API externa | Enriquecer desde Freelancer.com API (solo no procesados antes) |
+| 2.6a | ⚡ Automático | Obtener datos adicionales: presupuesto, skills requeridas, complejidad, etc |
 
-**Datos extraídos:**
+**Datos enriquecidos obtenidos:**
 ```
 Fecha | Remitente | Empresa | Descripción | URL | Hash | Estado
++ Presupuesto | Skills requeridas | Complejidad | Plataforma
 ```
 
-#### 2.2 - Enriquecimiento desde APIs Externas
+#### 2.2 - Evaluación y Priorización
 | Paso | Herramienta | Descripción |
 |------|-------------|------------|
-| 2.8 | 🌐 API externa | Llamar a Freelancer.com API (solo no procesados) |
-| 2.9 | ⚡ Automático | Obtener datos adicionales: presupuesto, skills requeridas, etc |
-| 2.10 | 💾 Google Sheets | Guardar en "Ofertas enriquecidas" |
+| 2.7 | 💾 Google Sheets | Guardar **datos completamente procesados y enriquecidos** (solo cuando están listos) |
+| 2.8 | 🟣 Claude | Evaluar match entre oferta y skills disponibles |
+| 2.9 | 📊 Fórmula | Calcular score (0-100) |
+| 2.10 | 📋 Google Sheets | Guardar en "Backlog priorizado" (ordenado por score) |
 
-**Datos enriquecidos:**
+**Schema final en Google Sheets:**
 ```
-... datos anteriores + Presupuesto | Skills requeridas | Complejidad | Plataforma
-```
-
-#### 2.3 - Evaluación y Priorización
-| Paso | Herramienta | Descripción |
-|------|-------------|------------|
-| 2.11 | 🟣 Claude | Evaluar match entre oferta y skills disponibles |
-| 2.12 | 📊 Fórmula | Calcular score (0-100) |
-| 2.13 | 📋 Google Sheets | Guardar en "Backlog priorizado" (ordenado por score) |
-
-**Schema final:**
-```
-Oferta | Skills match | Score | Prioridad | Estado | Asignado
+Oferta | Presupuesto | Skills match | Score | Prioridad | Estado | Asignado
 ```
 
 ---
@@ -239,9 +219,9 @@ Oferta | Skills match | Score | Prioridad | Estado | Asignado
 | Símbolo | Herramienta | Uso |
 |---------|-----------|-----|
 | 📧 | Gmail API | Entrada de oportunidades |
-| 📝 | Google Scripts | Filtrado y procesamiento automático |
+| 📝 | Google Apps Script | Procesamiento automático completo (extraer, validar, enriquecer) |
 | 🟣 | Claude (Pro/API) | Procesamiento inteligente |
-| 💾 | Google Sheets | Almacenamiento principal |
+| 💾 | Google Sheets | Almacenamiento principal (solo datos finales) |
 | 📄 | Google Drive | Documentos y propuestas |
 | 🌐 | APIs externas | Enriquecimiento de datos |
 | ⚡ | Fórmulas Sheets | Cálculos y automatización |
@@ -260,8 +240,9 @@ Sistema 1 (Competencias)
 
 Sistema 2 (Ofertas)
 ├── Trigger: Nuevo email
-├── Responsable: Google Scripts + APIs externas + Claude
-├── Datos: Google Sheets (Ofertas crudas, enriquecidas, backlog)
+├── Responsable: Google Apps Script (procesamiento integrado) + Claude
+├── Datos: Google Sheets (Backlog priorizado - datos completamente procesados)
+├── Ubicación del enriquecimiento: **Dentro del Google Apps Script del Drive**
 └── Frecuencia: Tiempo real
 
 Sistema 3 (Propuestas)
@@ -277,15 +258,15 @@ Sistema 3 (Propuestas)
 
 ### Google Workspace
 - **Gmail API**: Leer emails y enviar propuestas
-- **Sheets API**: CRUD en tablas (ofertas, skills, backlog)
+- **Sheets API**: CRUD en tablas (ofertas, backlog) - solo datos finales
 - **Drive API**: Guardar propuestas generadas
-- **Apps Script**: Automatización de filtrado y sincronización
+- **Apps Script**: Procesamiento automático integrado (extracción, validación, enriquecimiento desde APIs)
 
 ### Claude
 - **Claude Skill**: Carga puntual de competencias (event-driven)
 - **Claude API**: Generación de propuestas en tiempo real
 
 ### Datos Externos
-- **Freelancer.com API**: Enriquecer ofertas
+- **Freelancer.com API**: Enriquecer ofertas dentro del Google Apps Script
 - **LinkedIn**: Perfil y certificaciones (lectura manual/automatizada)
 - **Google Drive**: Almacenar proyectos y casos de éxito
