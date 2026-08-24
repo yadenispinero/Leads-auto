@@ -116,13 +116,13 @@ graph TB
     subgraph "🟢 TERMINADO (v1)"
         T1["📧 Gmail API"]
         T2["💾 Google Sheets<br/>Inventario_Capacidades"]
+        T3["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
+        T4["💾 Google Sheets<br/>Evaluación (Fórmulas)"]
     end
 
     subgraph "🟡 EN DESARROLLO"
-        D1["⚙️ Google Apps Script<br/>(Cron cada 4 horas)"]
-        D2["💾 Google Sheets<br/>Evaluación (Fórmulas)"]
-        D3["💾 Google Sheets<br/>Backlog Priorizado"]
-        D4["🟣 Claude Skill<br/>(Extracción capacidades)"]
+        D1["💾 Google Sheets<br/>Backlog Priorizado"]
+        D2["🟣 Claude Skill<br/>(Extracción capacidades)"]
     end
 
     subgraph "🔴 PROYECTADO"
@@ -132,20 +132,20 @@ graph TB
         P4["📊 Dashboard KPIs"]
     end
 
-    T1 --> D1
-    T2 -.-> D2
-    D1 --> D2
-    D2 --> D3
-    D4 --> T2
-    D3 --> P1
+    T1 --> T3
+    T2 -.-> T4
+    T3 --> T4
+    T4 --> D1
+    D2 --> T2
+    D1 --> P1
     P1 --> P2
 
     classDef terminado fill:#c8e6c9,stroke:#2e7d32,stroke-width:3px,color:#1b5e20
     classDef desarrollo fill:#fff9c4,stroke:#fbc02d,stroke-width:3px,color:#f57f17
     classDef proyectado fill:#ffccbc,stroke:#d84315,stroke-width:2px,color:#bf360c
 
-    class T1,T2 terminado
-    class D1,D2,D3,D4 desarrollo
+    class T1,T2,T3,T4 terminado
+    class D1,D2 desarrollo
     class P1,P2,P3,P4 proyectado
 ```
 
@@ -161,7 +161,7 @@ graph TB
     end
 
     subgraph "⚙️ CAPA DE PROCESAMIENTO"
-        GAS["⚙️ Google Apps Script<br/>(Cron cada 4 horas)<br/>🟡 EN DESARROLLO"]
+        GAS["⚙️ Google Apps Script<br/>(Cron cada 4 horas)<br/>🟢 TERMINADO"]
         
         subgraph Claude["🟣 CLAUDE (IA/Inteligencia AI)"]
             ClaudeSkill["🟣 Claude Skill<br/>(Extracción capacidades)<br/>🟡 EN DESARROLLO"]
@@ -171,7 +171,7 @@ graph TB
 
     subgraph "💾 CAPA DE ALMACENAMIENTO"
         SheetsInventario["💾 Google Sheets<br/>Inventario_Capacidades<br/>🟢 TERMINADO"]
-        SheetsEvaluacion["💾 Google Sheets<br/>Evaluación Fórmulas<br/>🟡 EN DESARROLLO"]
+        SheetsEvaluacion["💾 Google Sheets<br/>Evaluación Fórmulas<br/>🟢 TERMINADO"]
         SheetsBacklog["💾 Google Sheets<br/>Backlog Priorizado<br/>🟡 EN DESARROLLO"]
         Drive["📄 Google Drive<br/>(Propuestas guardadas)<br/>🔴 PROYECTADO"]
     end
@@ -219,8 +219,8 @@ graph TB
 
 ```mermaid
 graph LR
-    A["🔵 Gmail API<br/>(Lectura)<br/>🟢"] --> B["⚙️ Google Apps Script<br/>(Cron 4h)<br/>🟡"]
-    B --> C["💾 Google Sheets<br/>(Evaluación)<br/>🟡"]
+    A["🔵 Gmail API<br/>(Lectura)<br/>🟢"] --> B["⚙️ Google Apps Script<br/>(Cron 4h)<br/>🟢"]
+    B --> C["💾 Google Sheets<br/>(Evaluación)<br/>🟢"]
     B --> D["🌐 Freelancer.com<br/>(Enriquecimiento)<br/>🔴"]
     C --> E["💾 Backlog<br/>(Ordenado)<br/>🟡"]
     E --> F["🟣 Claude API<br/>(Propuestas)<br/>🔴"]
@@ -287,12 +287,12 @@ Body: Descripción, requirements, presupuesto (opcional)
 
 ---
 
-### 2. ⚙️ Google Apps Script (Cron - Cada 4 horas) | 🟡 EN DESARROLLO
+### 2. ⚙️ Google Apps Script (Cron - Cada 4 horas) | 🟢 TERMINADO
 **Función:** Procesamiento automático de emails en intervalos regulares.
 
 | Propiedad | Descripción |
 |-----------|------------|
-| **Estado** | 🟡 En desarrollo |
+| **Estado** | 🟢 Terminado (v1) |
 | **Tipo** | Automatización serverless |
 | **Rol** | Orquestación de procesamiento, extracción, validación, enriquecimiento |
 | **Trigger** | Cron cada 4 horas |
@@ -361,12 +361,12 @@ function processEmailsCron() {
 
 ---
 
-### 4. 💾 Google Sheets: Evaluación (Fórmulas) | 🟡 EN DESARROLLO
+### 4. 💾 Google Sheets: Evaluación (Fórmulas) | 🟢 TERMINADO
 **Función:** Procesar ofertas con fórmulas, calcular match y scoring automáticamente.
 
 | Propiedad | Descripción |
 |-----------|------------|
-| **Estado** | 🟡 En desarrollo |
+| **Estado** | 🟢 Terminado (v1) |
 | **Tipo** | Hoja de cálculo con fórmulas (Google Sheets) |
 | **Rol** | Evaluación automática, matching y scoring |
 | **Actualización** | Automática (datos de Google Apps Script + fórmulas) |
@@ -550,7 +550,7 @@ LinkedIn/Drive → 🟣 Claude Skill → 💾 Inventario_Capacidades → (refere
 
 ---
 
-### Flujo 2: Procesamiento de Ofertas (Cada 4 horas) | 🟡 EN DESARROLLO
+### Flujo 2: Procesamiento de Ofertas (Cada 4 horas) | 🟢 TERMINADO
 ```
 📧 Gmail → 🔵 Gmail API → ⚙️ Google Apps Script (Cron)
   ├─ Extraer datos
@@ -600,9 +600,9 @@ Propuesta enviada → Registrar en 💾 Google Sheets
 | Componente | Tecnología | Propósito | Frecuencia | Estado |
 |-----------|-----------|----------|-----------|--------|
 | Entrada de emails | 🔵 Gmail API | Recibir oportunidades | Cron cada 4h | 🟢 Terminado |
-| Procesamiento automático | ⚙️ Google Apps Script | Extraer, validar, enriquecer | Cada 4 horas | 🟡 En desarrollo |
+| Procesamiento automático | ⚙️ Google Apps Script | Extraer, validar, enriquecer | Cada 4 horas | 🟢 Terminado |
 | Almacenamiento capacidades | 💾 Google Sheets | Inventario único de skills | Event-driven | 🟢 Terminado |
-| Evaluación ofertas | 💾 Google Sheets (fórmulas) | Matching automático | En tiempo real | 🟡 En desarrollo |
+| Evaluación ofertas | 💾 Google Sheets (fórmulas) | Matching automático | En tiempo real | 🟢 Terminado |
 | Backlog priorizado | 💾 Google Sheets (ordenado) | Vista de oportunidades | Automático | 🟡 En desarrollo |
 | Enriquecimiento datos | 🌐 Freelancer.com API | Datos adicionales | Cada 4 horas | 🔴 Proyectado |
 | Extracción capacidades | 🟣 Claude Skill | Lectura inteligente | Event-driven | 🟡 En desarrollo |
