@@ -1,0 +1,7 @@
+# Credenciales de clasp (nunca subir)
+.clasprc.json
+.clasp.json
+
+node_modules/
+*.log
+.DS_Store
